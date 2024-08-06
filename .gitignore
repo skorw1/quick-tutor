@@ -1,0 +1,11 @@
+quick_tutor/api
+venv
+.idea
+quick_tutor/db.sqlite3
+
+__pycache__/
+*/__pycache__/
+*.py[cod]
+.pyc
+*.pyc
+

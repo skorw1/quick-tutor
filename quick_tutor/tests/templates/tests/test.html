@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Тест{% endblock %}
+
+{% block content %}
+
+<h1 style="font-size: 40px; text-align: center;">{{test.name}}</h1><br><br>
+
+<h3 style="font-size: 24px;">Вопрос: {{question.name}}:</h3><br>
+<h3 style="font-size: 20px;">Варианты ответа:</h3><br><br>
+
+<div class="runtest">
+    <form id="test-form" method="post" action="">
+        {% csrf_token %}
+        <input type="hidden" name="test_pk" value="{{test.pk}}">
+        {% for answer in answers %}
+        <input type="radio" name="answer" value="{{answer.pk}}" class="answer_option"> <span style="padding-left: 5px;">{{answer.answer}}</span> <br>
+        <br>
+        {% endfor %}
+        <div class="answer-test">
+            <span style="font-size: 40px; margin-left: 10px;">{{current_question}} / {{test.quantity_questions}}</span><button type="submit" class="test-submit-button">Ответить</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#test-form').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'test-run' pk_test=test.pk %}",
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.status === 'next_question') {
+                        // Reload the page to get the next question
+                        location.reload();
+                    } else if (response.status === 'finished') {
+                        // Redirect to the results page
+                        window.location.href = "{% url 'tests' %}";
+                        alert('Тест завершен. Ваш результат: ' + response.result);
+                    } else {
+                        alert('Произошла ошибка.');
+                    }
+                },
+                error: function(response) {
+                    alert('Произошла ошибка.');
+                }
+            });
+        });
+
+        // Warn user about navigating away from the page
+        window.onbeforeunload = function() {
+            return "Вы потеряете все изменения, если покинете эту страницу.";
+        };
+
+        // Remove the warning when form is submitted
+        $('#test-form').on('submit', function() {
+            window.onbeforeunload = null;
+        });
+    });
+</script>
+
+{% endblock %}

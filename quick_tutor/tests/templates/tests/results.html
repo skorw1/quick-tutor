@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Результаты{% endblock %}
+
+{% block content %}
+
+<h1>Блаблабла</h1> <br><br><br>
+
+<div class="result-test">
+    <b>{{result.user}}</b>, ответила правильно на {{result.quantity_correct_answers}} вопросов из {{test.quantity_questions}}
+</div>
+
+<br><br>
+{{result.date}}
+
+
+{% endblock %}

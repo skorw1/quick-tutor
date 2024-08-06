@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Тесты{% endblock %}
+
+
+{% block content %}
+
+<br><br>
+<h1 style="font-size: 40px; padding-top: 10px;">Тесты</h1>
+<hr>
+
+<div class="test-list">
+    {% for test, result in tests_with_results %}
+    <div style="display: flex; justify-content: space-between;">
+        <a href="{% url 'detail-test' pk=test.pk %}" class="test-description">{{ forloop.counter }} - {{ test.name }}</a>
+
+        {% if result %}
+            {% if result.completion_percentage < 33 %}
+            <p><b style="color: red">{{ result.completion_percentage }}%</b></p>
+            {% elif result.completion_percentage < 67 %}
+            <p><b style="color: orange">{{ result.completion_percentage }}%</b></p>
+            {% else %}
+            <p><b style="color: green">{{ result.completion_percentage }}%</b></p>
+            {% endif %}
+        {% else %}
+        <p>No result for this test</p>
+        {% endif %}
+    </div>
+    <br>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Заметки{% endblock %}
+
+
+
+{% block content %}
+
+<div class="main_categories">
+    <h1 style="font-size: 40px;">Мои заметки:</h1>
+    <div class="categories__block">
+    {% for cat in cats %}
+
+
+        <div class="main__content-category">
+            <div class="main__content-cat">
+
+                <a href="{% url 'detail-topic' language=cat.topic.category.language pk=cat.topic.pk %}">
+                    {% if cat.topic.image %}
+                    <img src="{{ cat.topic.image.url }}" class="image-category" alt="">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpMs7ltHnZEPo-QUU8w-pgVOnLeWMY_F3u1Q&s" class="image-category" alt="">
+                    {% endif %}
+                    <div class="main__category-name">{{cat.topic.name}}</div>
+                    <br>
+                    {% if cat.topic.difficult == 1 %}
+                    <b style="color: green;">Easy</b>
+                    {% elif cat.topic.difficult == 2 %}
+                    <b style="color: orange">Medium</b>
+                    {% else %}
+                    <b style="color: red">Hard</b>
+                    {% endif %}
+                </a>
+            </div>
+            </div>
+
+
+
+
+
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

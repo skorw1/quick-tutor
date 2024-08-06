@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{{topic.name}}{% endblock %}
+
+{% block content %}
+{{topic.category}}<br><br><br>
+
+<div class="topic-description">
+    {{topic.text|safe}}
+</div>
+
+<br>
+{% if request.user.is_authenticated %}
+<div class="notes-topic">
+    <button onclick="addNoteToTopic({{topic.pk}})" class="notes-button">Добавить в Заметки</button>
+    <button onclick="deleteNoteFromTopic({{topic.pk}})" class="notes-button">Удалить из заметок</button>
+</div>
+{% if usernote %}
+<br><p style="color: green;"><b>Запись находиться в заметках</b></p>
+{% else %}
+<br><p style="color: red;"><b>Записи нет в заметках</b></p>
+{% endif %}
+
+
+<script src="{% static 'main/js/script.js' %}"></script>
+{% endif %}
+{% endblock %}

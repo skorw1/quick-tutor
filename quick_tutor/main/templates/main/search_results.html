@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block title %}Результаты{% endblock %}
+
+{% block content %}
+
+<div class="main_categories">
+    {% if cats %}
+        {% for cat in cats %}
+        <div class="categories__block">
+            <h1 class="category">{{cat.category}}</h1>
+            <div class="main__content-category">
+
+                <div class="main__content-cat">
+
+                    <a href="{% url 'detail-topic' language=cat.category.language pk=cat.pk %}"><img src="{{ cat.image.url }}" class="image-category" alt="">
+                        <div class="main__category-name">{{cat.name}}</div>
+                        <br>
+                        {% if cat.difficult == 1 %}
+                        <b style="color: green;">Easy</b>
+                        {% elif cat.difficult == 2 %}
+                        <b style="color: orange">Medium</b>
+                        {% else %}
+                        <b style="color: red">Hard</b>
+                        {% endif %}</a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+            <div class="not-founded-content">
+                <h1 class="no-result-message">{{ no_result_message }}</h1>
+                <b><h1 class="no-result-message">Поиск по сайту:</h1></b>
+                <form action="{% url 'search' %}" method="get">
+                    <input type="search" class="header__search" name="search" placeholder="Я ищу...">
+                    <button class="header__search-button">
+                        <img src="{% static 'main/icons/header_icons/search.svg' %}" alt="Search" class="header__search-img">
+                    </button>
+                </form>
+            </div>
+    {% endif %}
+
+
+
+
+</div>
+
+
+{% endblock %}

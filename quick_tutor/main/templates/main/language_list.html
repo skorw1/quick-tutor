@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Список тем по {{language}} {% endblock %}
+
+{% block content %}
+
+<div class="main_categories">
+    {% for cat in cats %}
+        <p style="font-size: 32px;">{{cat}}</p>
+        {% if not cat.topic_set.all %}
+        <h3 style="padding-top: 30px;">Пока что ничего нет...</h3>
+        {% else %}
+        <div class="main__content-category">
+            {% for category in cat.topic_set.all %}
+            <div class="main__content-cat">
+                <a href="{% url 'detail-topic' language=cat.language pk=category.pk %}">
+                    {% if category.image %}
+                    <img src="{{category.image.url}}" class="image-category" alt="">
+                    {% else %}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpMs7ltHnZEPo-QUU8w-pgVOnLeWMY_F3u1Q&s" class="image-category" alt="">
+                    {% endif %}
+                    <div class="main__category-name">{{category.name}}</div>
+                    <br>
+                    {% if category.difficult == 1 %}
+                    <b style="color: green;">Easy</b>
+                    {% elif category.difficult == 2 %}
+                    <b style="color: orange">Medium</b>
+                    {% else %}
+                    <b style="color: red">Hard</b>
+                    {% endif %}
+                </a>
+
+
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

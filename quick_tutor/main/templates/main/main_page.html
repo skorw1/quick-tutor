@@ -1,0 +1,76 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Django шпаргалка{% endblock %}
+
+{% block content %}
+<main class="main">
+    <div class="main__content">
+        <h1 class="main__content-intro">Шпаргалка по django, и не только!</h1>
+        <div class="main__content-cats">
+            <div class="main__content-cat">
+                <a href="/Python/">
+                    <div class="main__content-name">Python</div>
+                    <img src="{% static 'main/icons/content_icons/python.svg' %}" alt="">
+                </a>
+            </div>
+
+            <div class="main__content-cat">
+                <a href="/Html/">
+                    <div class="main__content-name">Html</div>
+                    <img src="{% static 'main/icons/content_icons/html.svg' %}" alt="">
+                </a>
+            </div>
+            <div class="main__content-cat">
+                <a href="/Django/">
+                    <div class="main__content-name">Django</div>
+                    <img src="{% static 'main/icons/content_icons/django.svg' %}" alt="">
+                </a>
+            </div>
+            <div class="main__content-cat">
+                <a href="/JavaScript/">
+                    <div class="main__content-name">JavaScript</div>
+                    <img src="{% static 'main/icons/content_icons/javascript.svg' %}" alt="">
+                </a>
+            </div>
+            <div class="main__content-cat">
+                <a href="/Css/">
+                    <div class="main__content-name">Css</div>
+                    <img src="{% static 'main/icons/content_icons/css.svg' %}" alt="">
+                </a>
+            </div>
+            <div class="main__content-cat">
+                <a href="/Git/">
+                    <div class="main__content-name">Git</div>
+                    <img src="{% static 'main/icons/content_icons/git.svg' %}" alt="">
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="main__aside">
+        <div class="main__aside-list">
+            <a href="/Django/"><li class="main__aside-item">Django</li></a>
+            <a href="/Python/"><li class="main__aside-item">Python</li></a>
+            <a href="/Html/"><li class="main__aside-item">Html</li></a>
+            <a href="/Css/"><li class="main__aside-item">Css</li></a>
+            <a href="/Javascript/"><li class="main__aside-item">Javascript</li></a>
+            <a href="/Git/"><li class="main__aside-item">Git</li></a>
+            <br>
+            <hr>
+            <a href="{% url 'notes-list' %}"><li class="main__aside-item">Мои заметки</li></a>
+            <a href="{% url 'tests' %}"><li class="main__aside-item">Тесты</li></a>
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'login' %}"><li class="main__aside-item">Авторизация</li></a>
+            {% else %}
+            <a href="{% url 'logout' %}"><li class="main__aside-item">Выход</li></a>
+            {% endif %}
+            <br>
+            <hr>
+            <br>
+
+
+        </div>
+    </div>
+</main>
+{% endblock %}
